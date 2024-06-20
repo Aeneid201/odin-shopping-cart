@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { addToCart } from "./Cart";
+import { getCart } from "./Cart";
 
 export const getProduct = (id) => {
     const [product, setProduct] = useState([])
@@ -15,10 +15,7 @@ export const getProduct = (id) => {
           }
           return response.json();
         })
-        .then((response) => {
-            console.log(response)
-            return setProduct(response)
-        })
+        .then((response) => setProduct(response))
         .catch((error) => setError(error))
         .finally(() => setLoading(false));
     }, []);
@@ -30,6 +27,12 @@ export default function SingleProduct() {
 
     const {productId} = useParams()
     const {product} = getProduct(productId)
+    const {cart, setCart} = getCart()
+
+    function addToCart(e) {
+        const productId = e.target.dataset.id
+        setCart(prev => [...prev, productId])
+    }
 
     return(
         <section className="single--product">
@@ -46,7 +49,7 @@ export default function SingleProduct() {
                         <img src={product.image} alt={product.title} />
                     </div>
                     <div className="col-lg-3 col-md-4 col-sm-12 col-12">
-                        <button onClick={addToCart} data-id={product.id} className="btn btn-primary w-100">Add to cart</button>
+                        <button onClick={(e) => addToCart(e)} data-id={product.id} className="btn btn-primary w-100">Add to cart</button>
                     </div>
                 </div>
             </div>

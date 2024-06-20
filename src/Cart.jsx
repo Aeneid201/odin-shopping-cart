@@ -1,3 +1,6 @@
-export function addToCart(e) {
-    console.log('product added to cart : ', e.target.dataset.id)
-  }
+import { useState } from "react"
+
+export function getCart() {
+  const [cart, setCart] = useState([]);
+  return {cart, setCart}
+}
