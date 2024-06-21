@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getCart } from "./Cart";
+import { useOutletContext } from "react-router-dom";
 
 export const getProduct = (id) => {
     const [product, setProduct] = useState([])
@@ -27,12 +27,12 @@ export default function SingleProduct() {
 
     const {productId} = useParams()
     const {product} = getProduct(productId)
-    const {cart, setCart} = getCart()
+    const [cart, setCart] = useOutletContext()
 
-    function addToCart(e) {
-        const productId = e.target.dataset.id
-        setCart(prev => [...prev, productId])
-    }
+    function addToCart(id) {
+        setCart(prevCart => [...prevCart, id])
+        console.log(cart)
+      }
 
     return(
         <section className="single--product">
@@ -49,7 +49,7 @@ export default function SingleProduct() {
                         <img src={product.image} alt={product.title} />
                     </div>
                     <div className="col-lg-3 col-md-4 col-sm-12 col-12">
-                        <button onClick={(e) => addToCart(e)} data-id={product.id} className="btn btn-primary w-100">Add to cart</button>
+                        <button onClick={() => addToCart(product.id)} className="btn btn-primary w-100">Add to cart</button>
                     </div>
                 </div>
             </div>

@@ -8,23 +8,22 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import SingleProduct from './SingleProduct.jsx';
 import ErrorPage from './ErrorPage.jsx'
 
-//TODO: use loaders to pass data/maintain state between pages
-
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App/>,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "products/:productId",
+        element: <SingleProduct/>,
+      },
+      {
+        path: "shop",
+        element: <Shop/>
+      },
+    ]
   },
-  {
-    path: "shop",
-    element: <Shop/>,
-  },
-  {
-    path: "shop/:productId",
-    element: <SingleProduct/>,
-  },
-  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

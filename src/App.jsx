@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Outlet } from 'react-router-dom'
 
 export const getProducts = () => {
   const [products, setProducts] = useState([])
@@ -24,6 +25,8 @@ export const getProducts = () => {
 function App() {
 
   const {products, error, loading} = getProducts()
+  const [cart, setCart] = useState([]);
+  const itemsInCart = cart.length
 
 
   if(loading) return <p>Loading...</p>
@@ -31,9 +34,17 @@ function App() {
 
   
   return (
-    <>
-      <h1>Shopping cart</h1>
-    </>
+    <main className='py-5'>
+      <div className="container">
+        <div className="row">
+          <div className="col-12 text-center">
+            <h1>Ouma Shop</h1>
+            <p>Cart: {itemsInCart}</p>
+          </div>
+        </div>
+      </div>
+      <Outlet context={[cart, setCart]} />
+    </main>
   )
 }
 
