@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import Shop from './Shop.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css'
+import './assets/css/index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import SingleProduct from './SingleProduct.jsx';
 import ErrorPage from './ErrorPage.jsx'
+import Cart from './Cart.jsx';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         path: "shop",
         element: <Shop/>
       },
+      {
+        path: "cart",
+        element: <Cart/>
+      }
     ]
   },
 ]);

@@ -1,16 +1,15 @@
-import { getProducts } from "./App"
 import Product from "./components/Product"
-import { useLoaderData, Outlet, useOutlet, useOutletContext } from "react-router-dom"
+import {useOutletContext } from "react-router-dom"
+import { useFetchAll } from "./hooks/useFetch"
 
 
 export default function Shop() {
 
-const {products, error, loading} = getProducts()
+const {products, error, loading} = useFetchAll()
 const [cart, setCart] = useOutletContext()
 
-function addToCart(id) {
-  setCart(prevCart => [...prevCart, id])
-  console.log(cart)
+function addToCart(p) {
+  setCart(prevCart => [...prevCart, p])
 }
 
   if(loading) return <p>Loading...</p>
@@ -22,7 +21,7 @@ function addToCart(id) {
         
          <div className="container">
             <div className="row">
-                {products && products.map(p => <Product onClick={() => addToCart(p.id)} key={p.id} id={p.id} title={p.title} category={p.category} image={p.image} rating={p.rating.rate} price={p.price} />)}
+                {products && products.map(p => <Product onClick={() => addToCart(p)} key={p.id} id={p.id} title={p.title} category={p.category} image={p.image} rating={p.rating.rate} price={p.price} />)}
             </div>
          </div>
        </section>

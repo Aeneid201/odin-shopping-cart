@@ -1,38 +1,16 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useOutletContext } from "react-router-dom";
-
-export const getProduct = (id) => {
-    const [product, setProduct] = useState([])
-    const [error, setError] = useState(null)
-    const [loading, setLoading] = useState(true)
-  
-    useEffect(() => {
-      fetch(`https://fakestoreapi.com/products/${id}`, { mode: "cors" })
-        .then((response) => {
-          if (response.status >= 400) {
-            throw new Error("server error");
-          }
-          return response.json();
-        })
-        .then((response) => setProduct(response))
-        .catch((error) => setError(error))
-        .finally(() => setLoading(false));
-    }, []);
-  
-    return {product, error, loading}
-  }
+import {useFetchSingle} from "./hooks/useFetch";
 
 export default function SingleProduct() {
 
     const {productId} = useParams()
-    const {product} = getProduct(productId)
+    const {product} = useFetchSingle(productId)
     const [cart, setCart] = useOutletContext()
 
-    function addToCart(id) {
-        setCart(prevCart => [...prevCart, id])
-        console.log(cart)
-      }
+    function addToCart(p) {
+        setCart(prevCart => [...prevCart, p])
+    }
 
     return(
         <section className="single--product">
@@ -49,7 +27,7 @@ export default function SingleProduct() {
                         <img src={product.image} alt={product.title} />
                     </div>
                     <div className="col-lg-3 col-md-4 col-sm-12 col-12">
-                        <button onClick={() => addToCart(product.id)} className="btn btn-primary w-100">Add to cart</button>
+                        <button onClick={() => addToCart(product)} className="btn btn-primary w-100">Add to cart</button>
                     </div>
                 </div>
             </div>

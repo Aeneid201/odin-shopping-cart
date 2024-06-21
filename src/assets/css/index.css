@@ -36,3 +36,19 @@ a {
 section {
   padding: 60px 0;
 }
+
+.navbar-nav a {
+  color: #000;
+  padding: 5px 25px;
+}
+
+.cart--product {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: 33% 33% 33%;
+  gap: 40px;
+}
+
+.cart--product img {
+  width: 60px;
+}
