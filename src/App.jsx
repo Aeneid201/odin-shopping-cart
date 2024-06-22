@@ -16,15 +16,7 @@ function App() {
   return (
     <>
     <Header/>
-    <main className='py-5'>
-      <div className="container">
-        <div className="row">
-          <div className="col-12 text-center">
-            <h1>Ouma Shop</h1>
-            <p>Items in cart: {itemsInCart}, <Link to="cart">View Cart</Link></p>
-          </div>
-        </div>
-      </div>
+    <main>
       <Outlet context={[cart, setCart]} />
     </main>
     <Footer/>

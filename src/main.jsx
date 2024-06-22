@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import SingleProduct from './SingleProduct.jsx';
 import ErrorPage from './ErrorPage.jsx'
 import Cart from './Cart.jsx';
+import Home from './Home.jsx';
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
     element: <App/>,
     errorElement: <ErrorPage />,
     children: [
+      { index: true, element: <Home /> },
       {
         path: "products/:productId",
         element: <SingleProduct/>,
