@@ -18,13 +18,19 @@ export default function CartProduct(props) {
           <button onClick={props.onClick} className="trash">
             🗑️
           </button>
-          <span>{props.quantity}</span>
+          <span>
+            <input
+              name="quantity"
+              value={props.quantity}
+              onChange={props.onChange}
+            />
+          </span>
         </div>
       </td>
       <td>
         <div className="total">
           <p>${props.total}</p>
-        </div>{" "}
+        </div>
       </td>
     </tr>
   );

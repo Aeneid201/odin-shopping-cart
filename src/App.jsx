@@ -1,27 +1,25 @@
-import { useState, useEffect } from 'react'
-import { Link, Outlet } from 'react-router-dom'
-import {useFetchAll} from './hooks/useFetch'
-import Header from './components/Header'
-import Footer from './components/Footer'
+import { useState, useEffect } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { useFetchAll } from "./hooks/useFetch";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
-
-  const {products, error, loading} = useFetchAll()
+  const { products, error, loading } = useFetchAll();
   const [cart, setCart] = useState([]);
-  const itemsInCart = cart.length
 
-  if(loading) return <p>Loading...</p>
-  if(error) return <p>Network error!</p>
-  
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Network error!</p>;
+
   return (
     <>
-    <Header/>
-    <main>
-      <Outlet context={[cart, setCart]} />
-    </main>
-    <Footer/>
+      <Header />
+      <main>
+        <Outlet context={[cart, setCart]} />
+      </main>
+      <Footer />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
