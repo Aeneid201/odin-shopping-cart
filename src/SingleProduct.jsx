@@ -22,6 +22,10 @@ export default function SingleProduct() {
     });
   }
 
+  function isInCart(id) {
+    return cart.some((item) => item.id === id);
+  }
+
   return (
     <section className="single--product">
       <div className="container">
@@ -44,7 +48,7 @@ export default function SingleProduct() {
                 onClick={() => addToCart(product)}
                 className="shop--btn d-block mb-3"
               >
-                Add to cart
+                {isInCart(product.id) ? "Added to cart ✓" : "Add to cart +"}
               </button>
             </div>
           </div>

@@ -22,6 +22,32 @@ export default function Cart() {
     return setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   }
 
+  function addOne(id) {
+    setCart((prevCart) => {
+      if (prevCart.some((item) => item.id === id)) {
+        return prevCart.map((item) => {
+          const newObj = Object.assign({}, item); // to avoid duplication
+          if (item.id === id)
+            return { ...newObj, quantity: +item.quantity + 1 };
+          else return newObj;
+        });
+      }
+    });
+  }
+
+  function removeOne(id) {
+    setCart((prevCart) => {
+      if (prevCart.some((item) => item.id === id)) {
+        return prevCart.map((item) => {
+          const newObj = Object.assign({}, item); // to avoid duplication
+          if (item.id === id)
+            return { ...newObj, quantity: +item.quantity - 1 };
+          else return newObj;
+        });
+      }
+    });
+  }
+
   return (
     <section className="cart">
       <div className="bigger-container">
@@ -41,12 +67,14 @@ export default function Cart() {
                     onClick={() => removeFromCart(product.id)}
                     key={product.id}
                     id={product.id}
-                    total={product.price * product.quantity}
+                    total={(product.price * product.quantity).toFixed(2)}
                     quantity={product.quantity}
                     title={product.title}
                     image={product.image}
                     price={product.price}
                     onChange={(e) => updateCart(e, product.id)}
+                    addOne={() => addOne(product.id)}
+                    removeOne={() => removeOne(product.id)}
                   />
                 );
               })}

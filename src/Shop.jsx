@@ -22,6 +22,10 @@ export default function Shop() {
     });
   }
 
+  function isInCart(id) {
+    return cart.some((item) => item.id === id);
+  }
+
   if (loading)
     return (
       <div className="loading">
@@ -45,6 +49,7 @@ export default function Shop() {
                 image={p.image}
                 rating={p.rating.rate}
                 price={p.price}
+                text={isInCart(p.id) ? "Added to cart ✓" : "Add to cart +"}
               />
             ))}
         </div>

@@ -16,7 +16,7 @@ export default function Product(props) {
               data-id={props.id}
               className="shop--btn"
             >
-              Add to cart +
+              {props.text}
             </button>
             <p className="price mb-0">${props.price}</p>
           </div>

@@ -19,11 +19,19 @@ export default function CartProduct(props) {
             🗑️
           </button>
           <span>
+            <button type="button" onClick={props.removeOne} className="handle">
+              -
+            </button>
+
             <input
               name="quantity"
               value={props.quantity}
               onChange={props.onChange}
             />
+
+            <button type="button" onClick={props.addOne} className="handle">
+              +
+            </button>
           </span>
         </div>
       </td>
