@@ -40,7 +40,7 @@ export default function Cart() {
       if (prevCart.some((item) => item.id === id)) {
         return prevCart.map((item) => {
           const newObj = Object.assign({}, item); // to avoid duplication
-          if (item.id === id)
+          if (item.id === id && item.quantity > 0)
             return { ...newObj, quantity: +item.quantity - 1 };
           else return newObj;
         });
