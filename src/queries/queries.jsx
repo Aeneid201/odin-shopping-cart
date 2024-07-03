@@ -3,29 +3,27 @@ import ProductComponent from "../components/Product";
 import { useOutletContext } from "react-router-dom";
 import loadingImg from "../assets/images/loading.gif";
 
+export function useAddToCart(p, setCart) {
+  setCart((prevCart) => {
+    if (prevCart.some((item) => item.id === p.id)) {
+      return prevCart.map((item) => {
+        const newObj = Object.assign({}, item); // to avoid duplication
+        if (item.id === p.id)
+          return { ...newObj, quantity: (newObj.quantity += 1) };
+        else return newObj;
+      });
+    } else {
+      return [...prevCart, { ...p, quantity: 1 }];
+    }
+  });
+}
+
+export function useCheckCart(id, cart) {
+  return cart.some((item) => item.id === id);
+}
+
 export function Product({ id }) {
   const [cart, setCart] = useOutletContext();
-
-  console.log(cart);
-
-  function addToCart(p) {
-    setCart((prevCart) => {
-      if (prevCart.some((item) => item.id === p.id)) {
-        return prevCart.map((item) => {
-          const newObj = Object.assign({}, item); // to avoid duplication
-          if (item.id === p.id)
-            return { ...newObj, quantity: (newObj.quantity += 1) };
-          else return newObj;
-        });
-      } else {
-        return [...prevCart, { ...p, quantity: 1 }];
-      }
-    });
-  }
-
-  function isInCart(id) {
-    return cart.some((item) => item.id === id);
-  }
 
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ["product", id],
@@ -62,10 +60,12 @@ export function Product({ id }) {
               <p>{data.description}</p>
 
               <button
-                onClick={() => addToCart(data)}
+                onClick={() => useAddToCart(data, setCart)}
                 className="shop--btn d-block mb-3"
               >
-                {isInCart(data.id) ? "Added to cart ✓" : "Add to cart +"}
+                {useCheckCart(data.id, cart)
+                  ? "Added to cart ✓"
+                  : "Add to cart +"}
               </button>
             </div>
           </div>
@@ -77,25 +77,6 @@ export function Product({ id }) {
 
 export function Products() {
   const [cart, setCart] = useOutletContext();
-
-  function isInCart(id) {
-    return cart.some((item) => item.id === id);
-  }
-
-  function addToCart(p) {
-    setCart((prevCart) => {
-      if (prevCart.some((item) => item.id === p.id)) {
-        return prevCart.map((item) => {
-          const newObj = Object.assign({}, item); // to avoid duplication
-          if (item.id === p.id)
-            return { ...newObj, quantity: (newObj.quantity += 1) };
-          else return newObj;
-        });
-      } else {
-        return [...prevCart, { ...p, quantity: 1 }];
-      }
-    });
-  }
 
   const { isLoading, isError, data, error } = useQuery({
     queryKey: ["products"],
@@ -115,7 +96,7 @@ export function Products() {
     <>
       {data.map((p) => (
         <ProductComponent
-          onClick={() => addToCart(p)}
+          onClick={() => useAddToCart(p, setCart)}
           key={p.id}
           id={p.id}
           title={p.title}
@@ -123,7 +104,7 @@ export function Products() {
           image={p.image}
           rating={p.rating.rate}
           price={p.price}
-          text={isInCart(p.id) ? "Added to cart ✓" : "Add to cart +"}
+          text={useCheckCart(p.id, cart) ? "Added to cart ✓" : "Add to cart +"}
         />
       ))}
     </>

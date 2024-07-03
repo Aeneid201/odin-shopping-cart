@@ -11,7 +11,11 @@ export default function Cart() {
       if (prevCart.some((item) => item.id === id)) {
         return prevCart.map((item) => {
           const newObj = Object.assign({}, item); // to avoid duplication
-          if (item.id === id) return { ...newObj, quantity: e.target.value };
+          if (item.id === id)
+            return {
+              ...newObj,
+              quantity: e.target.value > 0 ? e.target.value : "",
+            };
           else return newObj;
         });
       }
@@ -40,7 +44,7 @@ export default function Cart() {
       if (prevCart.some((item) => item.id === id)) {
         return prevCart.map((item) => {
           const newObj = Object.assign({}, item); // to avoid duplication
-          if (item.id === id && item.quantity > 0)
+          if (item.id === id && item.quantity > 1)
             return { ...newObj, quantity: +item.quantity - 1 };
           else return newObj;
         });
